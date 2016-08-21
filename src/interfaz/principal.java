@@ -5,6 +5,8 @@
  */
 package interfaz;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author USUARIO
@@ -28,6 +30,14 @@ public class principal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        cmdCalcular = new javax.swing.JToggleButton();
+        cmdBorrar = new javax.swing.JButton();
+        txtCosto = new javax.swing.JTextField();
+        txtFinal = new javax.swing.JTextField();
+        txtInicial = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -36,8 +46,125 @@ public class principal extends javax.swing.JFrame {
         jLabel1.setText("9. Alquiler de tarjetas");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, 250, 50));
 
+        jLabel2.setText("Monto inicial");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+
+        jLabel3.setText("Monto final");
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, -1));
+
+        jLabel4.setText("Costo de la llamada");
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+
+        cmdCalcular.setText("Calcular costo");
+        cmdCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdCalcularActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmdCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, 110, 30));
+
+        cmdBorrar.setText("Nuevo");
+        cmdBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmdBorrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cmdBorrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, -1, 30));
+
+        txtCosto.setEditable(false);
+        getContentPane().add(txtCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 110, 30));
+
+        txtFinal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtFinalKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtFinal, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 110, 30));
+
+        txtInicial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtInicialKeyTyped(evt);
+            }
+        });
+        getContentPane().add(txtInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 80, 110, 30));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cmdBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdBorrarActionPerformed
+     txtInicial.setText("");
+     txtFinal.setText("");
+     txtCosto.setText("");
+     txtInicial.requestFocusInWindow();
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmdBorrarActionPerformed
+
+    private void cmdCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdCalcularActionPerformed
+double minicial, mfinal, costo, porcentaje;
+String costof;
+
+   if(txtInicial.getText().trim().isEmpty()){
+         JOptionPane.showMessageDialog(this, "Digite el monto inicial","error", JOptionPane.ERROR_MESSAGE);
+         txtInicial.requestFocusInWindow();
+     }
+     else if(txtFinal.getText().trim().isEmpty()){
+        JOptionPane.showMessageDialog(this, "Digite el monto final","error", JOptionPane.ERROR_MESSAGE);  
+        txtFinal.requestFocusInWindow();
+     }
+     
+     else{
+     
+     minicial=Double.parseDouble(txtInicial.getText());
+     mfinal=Double.parseDouble(txtFinal.getText());
+     
+     
+       if(mfinal== 0){
+      JOptionPane.showMessageDialog(this, "El monto final no puede ser cero","error", JOptionPane.ERROR_MESSAGE);  
+        txtFinal.requestFocusInWindow();
+        txtFinal.selectAll();
+        }   
+       else if(mfinal==minicial){     
+      JOptionPane.showMessageDialog(this, "No se realizó llamada","Note", JOptionPane.INFORMATION_MESSAGE);  
+        txtFinal.requestFocusInWindow();
+        txtFinal.selectAll();     
+        }
+       else if(mfinal>minicial){     
+      JOptionPane.showMessageDialog(this, "El monto final no puede ser mayor al inicial","error", JOptionPane.ERROR_MESSAGE);  
+        txtFinal.requestFocusInWindow();
+        txtFinal.selectAll();
+         
+        }
+     costo=(minicial-mfinal)*0.2; 
+     porcentaje=((minicial-mfinal)+costo);
+     
+     costof=String.valueOf(porcentaje);
+    txtCosto.setText(costof);
+       
+       
+     }
+
+       
+    }//GEN-LAST:event_cmdCalcularActionPerformed
+
+    private void txtInicialKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtInicialKeyTyped
+ char c=evt.getKeyChar(); 
+       
+          if(!Character.isDigit(c)) { 
+              getToolkit().beep();    
+              evt.consume(); 
+          }  
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtInicialKeyTyped
+
+    private void txtFinalKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFinalKeyTyped
+ char c=evt.getKeyChar(); 
+       
+          if(!Character.isDigit(c)) { 
+              getToolkit().beep();    
+              evt.consume(); 
+          }  
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFinalKeyTyped
 
     /**
      * @param args the command line arguments
@@ -75,6 +202,14 @@ public class principal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cmdBorrar;
+    private javax.swing.JToggleButton cmdCalcular;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JTextField txtCosto;
+    private javax.swing.JTextField txtFinal;
+    private javax.swing.JTextField txtInicial;
     // End of variables declaration//GEN-END:variables
 }
